@@ -53,6 +53,7 @@ namespace BoardGlower
                 cols = 1;
             }
 
+
             //info for the buttons
             int startingX = 10;
             int startingY = 10;
