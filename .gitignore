@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/boardGlower/FileContentIndex
+/.vs/boardGlower/v17/.suo
+/BoardGlower/.vs/BoardGlower.csproj.dtbcache.json
+/BoardGlower/bin/Debug
+/BoardGlower/obj/Debug/BoardGlower.csproj.CoreCompileInputs.cache
+/BoardGlower/obj/Debug/BoardGlower.csproj.FileListAbsolute.txt
+/BoardGlower/obj/Debug/BoardGlower.csproj.GenerateResource.cache
+/BoardGlower/obj/Debug/BoardGlower.exe
+/BoardGlower/obj/Debug/BoardGlower.Form1.resources
+/BoardGlower/obj/Debug/BoardGlower.gridButton.resources
+/BoardGlower/obj/Debug/BoardGlower.pdb
+/BoardGlower/obj/Debug/BoardGlower.Properties.Resources.resources
+/BoardGlower/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
