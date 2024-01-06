@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,6 +14,8 @@ namespace BoardGlower
 {
     public partial class Form1 : Form
     {
+        private DirectoryInfo pieceDir = new DirectoryInfo("..\\..\\Pieces"); //Directory object for reading the piece files. Relative should work.
+
         public Form1()
         {
             InitializeComponent();
@@ -72,7 +75,6 @@ namespace BoardGlower
                     button.Name = "btn" + i + j;
                     button.Location = new Point(startingX, startingY);
                     button.Size = new Size(width, height);
-                    button.Text = button.Name.ToString();
 
                     this.Controls.Add(button);
 
@@ -83,10 +85,19 @@ namespace BoardGlower
             }
         }
 
-        //On load, set up the map
+        private void loadPieces()
+        {
+            foreach(FileInfo fileInfo in pieceDir.GetFiles())
+            {
+                lstPieces.Items.Add(fileInfo.Name);
+            }
+        }
+
+        //On load, set up the form
         private void Form1_Load(object sender, EventArgs e)
         {
             setUpMap();
+            loadPieces();
         }
 
         //When the size text boxes are changed, update the map. Perhaps I could switch this over to a button...
