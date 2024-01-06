@@ -18,6 +18,7 @@ namespace BoardGlower
             InitializeComponent();
         }
 
+        //Clears out the map.
         private void clearMap()
         {
             string pattern = "btn\\d{2,4}";
@@ -82,11 +83,13 @@ namespace BoardGlower
             }
         }
 
+        //On load, set up the map
         private void Form1_Load(object sender, EventArgs e)
         {
             setUpMap();
         }
 
+        //When the size text boxes are changed, update the map. Perhaps I could switch this over to a button...
         private void txtSizeRows_TextChanged(object sender, EventArgs e)
         {
             setUpMap();
@@ -97,6 +100,7 @@ namespace BoardGlower
             setUpMap();
         }
 
+        //Resets the map to the default size
         private void btnDefault_Click(object sender, EventArgs e)
         {
             txtSizeRows.Text = "10";
@@ -104,6 +108,7 @@ namespace BoardGlower
             setUpMap();
         }
 
+        //Completely clears the map. Useful for debugging.
         private void btnClear_Click(object sender, EventArgs e)
         {
             clearMap();
