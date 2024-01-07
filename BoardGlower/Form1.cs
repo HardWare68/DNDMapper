@@ -59,24 +59,18 @@ namespace BoardGlower
         {
             Button btnSender = (Button)sender;
             piece curPiece;
-            List<pieceMoves> curMoves;
             JsonSerializer serializer = new JsonSerializer();
 
             //Load up the piece
             using (StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
             {
                 curPiece = (piece)serializer.Deserialize(file, typeof(piece));
-                /*foreach(object pieceMove in curPiece.moves)
-                {
-                    curMoves.Add( (pieceMoves)serializer.Deserialize(pieceMove, typeof(pieceMoves)) );
-                }*/
             }
 
             //If the current button is empty (and something is selected), let's fill it up
             if (btnSender.Text == "" && lstPieces.SelectedIndex != -1)
             {
                 btnSender.Text = curPiece.symbol;
-                txtLog.Text += "curPiece.is " + curPiece.moves;
             } 
             //oh no. there is a piece in there. let's fill out the moves.
             else if (btnSender.Text != "")
@@ -90,9 +84,7 @@ namespace BoardGlower
                     Button moveButton = new Button();
 
                     moveButton.Text = curPiece.moves[i].moveName;
-                    moveButton.Location = new Point(X, Y);
-
-                    
+                    moveButton.Location = new Point(X, Y); 
 
                     grpMoves.Controls.Add(moveButton);
                     X += 75;
