@@ -1,3 +1,11 @@
 {
-  "pieceName":  "Example"
+  "pieceName": "Example",
+  "symbol": "Ex",
+  "moves": [
+    {
+      "moveName": "Slash",
+      "moveType": "Slash",
+      "moveRange": 3
+    }
+  ]
 }

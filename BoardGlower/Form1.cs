@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,14 @@ namespace BoardGlower
     public partial class Form1 : Form
     {
         private DirectoryInfo pieceDir = new DirectoryInfo("..\\..\\Pieces"); //Directory object for reading the piece files. Relative should work.
+
+        //object that stores the piece info from the JSON
+        public class piece
+        {
+            public string pieceName { get; set; }
+            public string symbol { get; set; }
+            public Object[] moves { get; set; }
+        }
 
         public Form1()
         {
@@ -33,6 +42,28 @@ namespace BoardGlower
                 if (rg.IsMatch(c.Name))
                 {
                     this.Controls.RemoveAt(i);
+                }
+            }
+        }
+
+        //function that handles the map buttons being clicked. get ready for some abominations lmao.
+        private void mapButtonClick(object sender, EventArgs e)
+        {
+            Button btnSender = (Button)sender;
+
+            //If the current button is empty (and something is selected), let's fill it up
+            if (btnSender.Text == "" && lstPieces.SelectedIndex != -1)
+            {
+                txtLog.Text += "I'm inside the if statement!\n";
+
+                //Load up the piece
+                using(StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
+                {
+                    txtLog.Text += "I'm inside the using!";
+                    JsonSerializer serializer = new JsonSerializer();
+                    piece piece = (piece)serializer.Deserialize(file, typeof(piece));
+
+                    btnSender.Text = piece.symbol;
                 }
             }
         }
@@ -76,6 +107,8 @@ namespace BoardGlower
                     button.Name = "btnR" + i + "C" + j;
                     button.Location = new Point(startingX, startingY);
                     button.Size = new Size(width, height);
+
+                    button.Click += new EventHandler(this.mapButtonClick);
 
                     this.Controls.Add(button);
 

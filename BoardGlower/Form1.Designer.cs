@@ -36,6 +36,9 @@
             this.txtSizeCols = new System.Windows.Forms.TextBox();
             this.btnDefault = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
+            this.grpMoves = new System.Windows.Forms.GroupBox();
+            this.txtLog = new System.Windows.Forms.TextBox();
+            this.lblLog = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lstPieces
@@ -111,11 +114,42 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // grpMoves
+            // 
+            this.grpMoves.Location = new System.Drawing.Point(995, 333);
+            this.grpMoves.Name = "grpMoves";
+            this.grpMoves.Size = new System.Drawing.Size(290, 273);
+            this.grpMoves.TabIndex = 10;
+            this.grpMoves.TabStop = false;
+            this.grpMoves.Text = "groupBox1";
+            // 
+            // txtLog
+            // 
+            this.txtLog.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txtLog.Location = new System.Drawing.Point(1304, 519);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
+            this.txtLog.Size = new System.Drawing.Size(205, 86);
+            this.txtLog.TabIndex = 11;
+            // 
+            // lblLog
+            // 
+            this.lblLog.AutoSize = true;
+            this.lblLog.Location = new System.Drawing.Point(1304, 500);
+            this.lblLog.Name = "lblLog";
+            this.lblLog.Size = new System.Drawing.Size(28, 13);
+            this.lblLog.TabIndex = 12;
+            this.lblLog.Text = "Log:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1536, 620);
+            this.Controls.Add(this.lblLog);
+            this.Controls.Add(this.txtLog);
+            this.Controls.Add(this.grpMoves);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnDefault);
             this.Controls.Add(this.txtSizeCols);
@@ -141,6 +175,9 @@
         private System.Windows.Forms.TextBox txtSizeCols;
         private System.Windows.Forms.Button btnDefault;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.GroupBox grpMoves;
+        private System.Windows.Forms.TextBox txtLog;
+        private System.Windows.Forms.Label lblLog;
     }
 }
 
