@@ -116,12 +116,12 @@
             // 
             // grpMoves
             // 
+            this.grpMoves.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpMoves.Location = new System.Drawing.Point(995, 333);
             this.grpMoves.Name = "grpMoves";
             this.grpMoves.Size = new System.Drawing.Size(290, 273);
             this.grpMoves.TabIndex = 10;
             this.grpMoves.TabStop = false;
-            this.grpMoves.Text = "groupBox1";
             // 
             // txtLog
             // 

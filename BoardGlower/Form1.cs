@@ -22,8 +22,16 @@ namespace BoardGlower
         {
             public string pieceName { get; set; }
             public string symbol { get; set; }
-            public Object[] moves { get; set; }
+            public pieceMoves[] moves { get; set; }
         }
+
+        public class pieceMoves
+        {
+            public string moveName { get; set; }
+            public string moveType { get; set; }
+            public int moverange { get; set; }
+        }
+
 
         public Form1()
         {
@@ -50,18 +58,44 @@ namespace BoardGlower
         private void mapButtonClick(object sender, EventArgs e)
         {
             Button btnSender = (Button)sender;
+            piece curPiece;
+            List<pieceMoves> curMoves;
+            JsonSerializer serializer = new JsonSerializer();
+
+            //Load up the piece
+            using (StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
+            {
+                curPiece = (piece)serializer.Deserialize(file, typeof(piece));
+                /*foreach(object pieceMove in curPiece.moves)
+                {
+                    curMoves.Add( (pieceMoves)serializer.Deserialize(pieceMove, typeof(pieceMoves)) );
+                }*/
+            }
 
             //If the current button is empty (and something is selected), let's fill it up
             if (btnSender.Text == "" && lstPieces.SelectedIndex != -1)
             {
+                btnSender.Text = curPiece.symbol;
+                txtLog.Text += "curPiece.is " + curPiece.moves;
+            } 
+            //oh no. there is a piece in there. let's fill out the moves.
+            else if (btnSender.Text != "")
+            {
+                grpMoves.Text = curPiece.pieceName;
 
-                //Load up the piece
-                using(StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
+                int X = 7;
+                int Y = 21;
+                for(int i = 0; i < curPiece.moves.Length; i++)
                 {
-                    JsonSerializer serializer = new JsonSerializer();
-                    piece piece = (piece)serializer.Deserialize(file, typeof(piece));
+                    Button moveButton = new Button();
 
-                    btnSender.Text = piece.symbol;
+                    moveButton.Text = curPiece.moves[i].moveName;
+                    moveButton.Location = new Point(X, Y);
+
+                    
+
+                    grpMoves.Controls.Add(moveButton);
+                    X += 75;
                 }
             }
         }

@@ -6,6 +6,12 @@
       "moveName": "Slash",
       "moveType": "Slash",
       "moveRange": 3
+    },
+
+    {
+      "moveName": "Slash Again",
+      "moveType": "Slash",
+      "moveRange": 3
     }
   ]
 }
