@@ -24,7 +24,7 @@ namespace BoardGlower
         //Clears out the map.
         private void clearMap()
         {
-            string pattern = "btn\\d{2,4}";
+            string pattern = "btnR\\d+C\\d+";
             Regex rg = new Regex(pattern);
 
             for(int i = this.Controls.Count - 1; i >= 0; i--)
@@ -37,6 +37,7 @@ namespace BoardGlower
             }
         }
 
+        //Set up the map
         private void setUpMap()
         {
             //First, clear up the map
@@ -72,7 +73,7 @@ namespace BoardGlower
                     //create ze button
                     Button button = new Button();
 
-                    button.Name = "btn" + i + j;
+                    button.Name = "btnR" + i + "C" + j;
                     button.Location = new Point(startingX, startingY);
                     button.Size = new Size(width, height);
 
