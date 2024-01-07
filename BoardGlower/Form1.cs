@@ -54,12 +54,10 @@ namespace BoardGlower
             //If the current button is empty (and something is selected), let's fill it up
             if (btnSender.Text == "" && lstPieces.SelectedIndex != -1)
             {
-                txtLog.Text += "I'm inside the if statement!\n";
 
                 //Load up the piece
                 using(StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
                 {
-                    txtLog.Text += "I'm inside the using!";
                     JsonSerializer serializer = new JsonSerializer();
                     piece piece = (piece)serializer.Deserialize(file, typeof(piece));
 
