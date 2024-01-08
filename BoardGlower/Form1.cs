@@ -104,12 +104,12 @@ namespace BoardGlower
 
             if(!int.TryParse(txtSizeRows.Text, out rows))
             {
-                MessageBox.Show("Please ensure the number of rows was inputed correctly.\nDefaulting to 1.", "Invalid Input", MessageBoxButtons.OK);
+                txtLog.Text += "[W] Please ensure the number of rows was inputed correctly. Defaulting to 1.";
                 rows = 1;
             }
             if(!int.TryParse (txtSizeCols.Text, out cols))
             {
-                MessageBox.Show("Please ensure the number of columns was inputed corerctly.\nDefaulting to 1.", "Invalid Input", MessageBoxButtons.OK);
+                txtLog.Text += "[W] Please ensure the number of columns was inputed correctly. Defaulting to 1.";
                 cols = 1;
             }
 
