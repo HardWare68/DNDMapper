@@ -132,16 +132,27 @@ namespace BoardGlower
             }
         }
 
+        //method for retrieving the current X position of the current piece
+        private int retrieveCurrentX()
+        {
+            string curXPattern = "R\\d+";
+            Regex rgCurX = new Regex(curXPattern);
+            return int.Parse(rgCurX.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
+        }
+
+        //retrieve current Y position as well. yeehaw!
+        private int retrieveCurrentY()
+        {
+            string curYPattern = "C\\d+";
+            Regex rgCurY = new Regex(curYPattern);
+            return int.Parse(rgCurY.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
+        }
+
         private void slashAttack(Button btnSender, int moveIndex)
         {
             //lets first get out the current X and Y
-            string curXPattern = "R\\d+";
-            Regex rgCurX = new Regex(curXPattern);
-            int curX = int.Parse(rgCurX.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
-
-            string curYPattern = "C\\d+";
-            Regex rgCurY = new Regex(curYPattern);
-            int curY = int.Parse(rgCurY.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
+            int curX = retrieveCurrentX();
+            int curY = retrieveCurrentY();
 
             //switch based on which way we are facing
             //except im using an if statement because im dumb... ):
