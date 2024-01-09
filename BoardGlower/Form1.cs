@@ -16,6 +16,8 @@ namespace BoardGlower
     public partial class Form1 : Form
     {
         private DirectoryInfo pieceDir = new DirectoryInfo("..\\..\\Pieces"); //Directory object for reading the piece files. Relative should work.
+        piece curPiece; //Gotta put this on the global scope. lol!
+        Button btnCurrentPiece; //Gotta put this on the global scope as well. lol!
 
         //object that stores the piece info from the JSON
         public class piece
@@ -57,8 +59,7 @@ namespace BoardGlower
         //function that handles the map buttons being clicked. get ready for some abominations lmao.
         private void mapButtonClick(object sender, EventArgs e)
         {
-            Button btnSender = (Button)sender;
-            piece curPiece;
+            btnCurrentPiece = (Button)sender;
             JsonSerializer serializer = new JsonSerializer();
 
             //Load up the piece
@@ -68,12 +69,12 @@ namespace BoardGlower
             }
 
             //If the current button is empty (and something is selected), let's fill it up
-            if (btnSender.Text == "" && lstPieces.SelectedIndex != -1)
+            if (btnCurrentPiece.Text == "" && lstPieces.SelectedIndex != -1)
             {
-                btnSender.Text = curPiece.symbol;
+                btnCurrentPiece.Text = curPiece.symbol;
             } 
             //oh no. there is a piece in there. let's fill out the moves.
-            else if (btnSender.Text != "")
+            else if (btnCurrentPiece.Text != "")
             {
                 grpMoves.Text = curPiece.pieceName;
 
@@ -84,12 +85,66 @@ namespace BoardGlower
                     Button moveButton = new Button();
 
                     moveButton.Text = curPiece.moves[i].moveName;
-                    moveButton.Location = new Point(X, Y); 
+                    moveButton.Location = new Point(X, Y);
+                    moveButton.Name = "btnMove" + i;
+
+                    moveButton.MouseHover += new EventHandler(actionButtonHover);
 
                     grpMoves.Controls.Add(moveButton);
                     X += 75;
                 }
             }
+        }
+
+        //method that handles when an action button gets hovered over
+        private void actionButtonHover(object sender, EventArgs e)
+        {
+            Button btnSender = (Button)sender;
+
+            //string method out which button we are deal with
+            int moveIndex = int.Parse(btnSender.Name.Remove(0, 7));
+
+            switch (curPiece.moves[moveIndex].moveType.ToUpper())
+            {
+                case "SLASH":
+                    slashAttack(btnSender, moveIndex);
+                    break;
+
+                default:
+                    txtLog.Text += "[E] Invalid Move Type supplied!";
+                    break;
+            }
+        }
+
+        private void slashAttack(Button btnSender, int moveIndex)
+        {
+            //lets first get out the current X and Y
+            string curXPattern = "R\\d+";
+            Regex rgCurX = new Regex(curXPattern);
+            int curX = int.Parse(rgCurX.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
+
+
+            string curYPattern = "C\\d+";
+            Regex rgCurY = new Regex(curYPattern);
+            int curY = int.Parse(rgCurY.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
+
+            //for the default slash, we need to go 1 up, and then floor((attackRadius)/2) to the left and right
+            int neededX = curX + 1;
+            int lowY = int.Parse((curY - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString())/2)).ToString());
+            int highY = int.Parse((curY + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString())/2)).ToString());
+
+            //now we regex and find buttons that fit that
+            //this is totally normal behaviour
+            string neededPattern = "btnR" + neededX + "C[" + lowY + "-" + highY + "]";
+            Regex rgNeeded = new Regex(neededPattern);
+            foreach(Control controlz in this.Controls)
+            {
+                if (rgNeeded.IsMatch(controlz.Name))
+                {
+                    controlz.BackColor = Color.Green;
+                }
+            }
+
         }
 
         //Set up the map
