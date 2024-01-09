@@ -39,6 +39,12 @@
             this.grpMoves = new System.Windows.Forms.GroupBox();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.lblLog = new System.Windows.Forms.Label();
+            this.grpCompass = new System.Windows.Forms.GroupBox();
+            this.radUp = new System.Windows.Forms.RadioButton();
+            this.radDown = new System.Windows.Forms.RadioButton();
+            this.radLeft = new System.Windows.Forms.RadioButton();
+            this.radRight = new System.Windows.Forms.RadioButton();
+            this.grpCompass.SuspendLayout();
             this.SuspendLayout();
             // 
             // lstPieces
@@ -142,11 +148,65 @@
             this.lblLog.TabIndex = 12;
             this.lblLog.Text = "Log:";
             // 
+            // grpCompass
+            // 
+            this.grpCompass.Controls.Add(this.radRight);
+            this.grpCompass.Controls.Add(this.radLeft);
+            this.grpCompass.Controls.Add(this.radDown);
+            this.grpCompass.Controls.Add(this.radUp);
+            this.grpCompass.Location = new System.Drawing.Point(1304, 300);
+            this.grpCompass.Name = "grpCompass";
+            this.grpCompass.Size = new System.Drawing.Size(75, 75);
+            this.grpCompass.TabIndex = 13;
+            this.grpCompass.TabStop = false;
+            this.grpCompass.Text = "Compass";
+            // 
+            // radUp
+            // 
+            this.radUp.AutoSize = true;
+            this.radUp.Location = new System.Drawing.Point(30, 19);
+            this.radUp.Name = "radUp";
+            this.radUp.Size = new System.Drawing.Size(14, 13);
+            this.radUp.TabIndex = 0;
+            this.radUp.TabStop = true;
+            this.radUp.UseVisualStyleBackColor = true;
+            // 
+            // radDown
+            // 
+            this.radDown.AutoSize = true;
+            this.radDown.Location = new System.Drawing.Point(30, 56);
+            this.radDown.Name = "radDown";
+            this.radDown.Size = new System.Drawing.Size(14, 13);
+            this.radDown.TabIndex = 1;
+            this.radDown.TabStop = true;
+            this.radDown.UseVisualStyleBackColor = true;
+            // 
+            // radLeft
+            // 
+            this.radLeft.AutoSize = true;
+            this.radLeft.Location = new System.Drawing.Point(6, 37);
+            this.radLeft.Name = "radLeft";
+            this.radLeft.Size = new System.Drawing.Size(14, 13);
+            this.radLeft.TabIndex = 2;
+            this.radLeft.TabStop = true;
+            this.radLeft.UseVisualStyleBackColor = true;
+            // 
+            // radRight
+            // 
+            this.radRight.AutoSize = true;
+            this.radRight.Location = new System.Drawing.Point(55, 37);
+            this.radRight.Name = "radRight";
+            this.radRight.Size = new System.Drawing.Size(14, 13);
+            this.radRight.TabIndex = 3;
+            this.radRight.TabStop = true;
+            this.radRight.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1536, 620);
+            this.Controls.Add(this.grpCompass);
             this.Controls.Add(this.lblLog);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.grpMoves);
@@ -161,6 +221,8 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.grpCompass.ResumeLayout(false);
+            this.grpCompass.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,6 +240,11 @@
         private System.Windows.Forms.GroupBox grpMoves;
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.Label lblLog;
+        private System.Windows.Forms.GroupBox grpCompass;
+        private System.Windows.Forms.RadioButton radRight;
+        private System.Windows.Forms.RadioButton radLeft;
+        private System.Windows.Forms.RadioButton radDown;
+        private System.Windows.Forms.RadioButton radUp;
     }
 }
 

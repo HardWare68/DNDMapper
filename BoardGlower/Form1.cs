@@ -123,27 +123,93 @@ namespace BoardGlower
             Regex rgCurX = new Regex(curXPattern);
             int curX = int.Parse(rgCurX.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
 
-
             string curYPattern = "C\\d+";
             Regex rgCurY = new Regex(curYPattern);
             int curY = int.Parse(rgCurY.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
 
-            //for the default slash, we need to go 1 up, and then floor((attackRadius)/2) to the left and right
-            int neededX = curX + 1;
-            int lowY = int.Parse((curY - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString())/2)).ToString());
-            int highY = int.Parse((curY + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString())/2)).ToString());
-
-            //now we regex and find buttons that fit that
-            //this is totally normal behaviour
-            string neededPattern = "btnR" + neededX + "C[" + lowY + "-" + highY + "]";
-            Regex rgNeeded = new Regex(neededPattern);
-            foreach(Control controlz in this.Controls)
+            //switch based on which way we are facing
+            //except im using an if statement because im dumb... ):
+            //UP
+            if (radUp.Checked)
             {
-                if (rgNeeded.IsMatch(controlz.Name))
+                //for the default slash, we need to go 1 up, and then floor((attackRadius)/2) to the left and right
+                int neededX = curX - 1;
+                int lowY = int.Parse((curY - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int highY = int.Parse((curY + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+
+                //now we regex and find buttons that fit that
+                //this is totally normal behaviour
+                string neededPattern = "btnR" + neededX + "C[" + lowY + "-" + highY + "]";
+                Regex rgNeeded = new Regex(neededPattern);
+                foreach (Control controlz in this.Controls)
                 {
-                    controlz.BackColor = Color.Green;
+                    if (rgNeeded.IsMatch(controlz.Name))
+                    {
+                        controlz.BackColor = Color.Green;
+                    }
                 }
             }
+            //DOWN
+            else if (radDown.Checked)
+            {
+                //this actually goes DOWN. not UP. Epic fail!!! smartphowned.com
+                int neededX = curX + 1;
+                int lowY = int.Parse((curY - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int highY = int.Parse((curY + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+
+                //now we regex and find buttons that fit that
+                //this is totally normal behaviour
+                string neededPattern = "btnR" + neededX + "C[" + lowY + "-" + highY + "]";
+                Regex rgNeeded = new Regex(neededPattern);
+                foreach (Control controlz in this.Controls)
+                {
+                    if (rgNeeded.IsMatch(controlz.Name))
+                    {
+                        controlz.BackColor = Color.Green;
+                    }
+                }
+            }
+            //LEFT
+            else if (radLeft.Checked)
+            {
+                int lowX = int.Parse((curX - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int highX = int.Parse((curX + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int neededY = curY - 1;
+
+                //now we regex and find buttons that fit that
+                //this is totally normal behaviour
+                string neededPattern = "btnR[" + lowX + "-" + highX + "]C" + neededY;
+                Regex rgNeeded = new Regex(neededPattern);
+                foreach (Control controlz in this.Controls)
+                {
+                    if (rgNeeded.IsMatch(controlz.Name))
+                    {
+                        controlz.BackColor = Color.Green;
+                    }
+                }
+            }
+            //RIGHT
+            else if (radRight.Checked)
+            {
+                int lowX = int.Parse((curX - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int highX = int.Parse((curX + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int neededY = curY + 1;
+
+                //now we regex and find buttons that fit that
+                //this is totally normal behaviour
+                string neededPattern = "btnR[" + lowX + "-" + highX + "]C" + neededY;
+                Regex rgNeeded = new Regex(neededPattern);
+                foreach (Control controlz in this.Controls)
+                {
+                    if (rgNeeded.IsMatch(controlz.Name))
+                    {
+                        controlz.BackColor = Color.Green;
+                    }
+                }
+            }
+            //FUCK
+            else { txtLog.Text += "[W] Please select a direction on the compass."; }
+
 
         }
 
