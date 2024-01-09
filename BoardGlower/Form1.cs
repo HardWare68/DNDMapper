@@ -161,8 +161,8 @@ namespace BoardGlower
             {
                 //for the default slash, we need to go 1 up, and then floor((attackRadius)/2) to the left and right
                 int neededX = curX - 1;
-                int lowY = int.Parse((curY - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
-                int highY = int.Parse((curY + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int lowY = curY - curPiece.moves[moveIndex].moverange / 2;
+                int highY = curY + curPiece.moves[moveIndex].moverange / 2;
 
                 //now we regex and find buttons that fit that
                 //this is totally normal behaviour
@@ -181,8 +181,8 @@ namespace BoardGlower
             {
                 //this actually goes DOWN. not UP. Epic fail!!! smartphowned.com
                 int neededX = curX + 1;
-                int lowY = int.Parse((curY - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
-                int highY = int.Parse((curY + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int lowY = curY - curPiece.moves[moveIndex].moverange / 2;
+                int highY = curY + curPiece.moves[moveIndex].moverange / 2;
 
                 //now we regex and find buttons that fit that
                 //this is totally normal behaviour
@@ -199,8 +199,8 @@ namespace BoardGlower
             //LEFT
             else if (radLeft.Checked)
             {
-                int lowX = int.Parse((curX - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
-                int highX = int.Parse((curX + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int lowX = curX - curPiece.moves[moveIndex].moverange / 2;
+                int highX = curX + curPiece.moves[moveIndex].moverange / 2;
                 int neededY = curY - 1;
 
                 //now we regex and find buttons that fit that
@@ -218,8 +218,8 @@ namespace BoardGlower
             //RIGHT
             else if (radRight.Checked)
             {
-                int lowX = int.Parse((curX - Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
-                int highX = int.Parse((curX + Math.Floor(Double.Parse(curPiece.moves[moveIndex].moverange.ToString()) / 2)).ToString());
+                int lowX = curX - curPiece.moves[moveIndex].moverange / 2;
+                int highX = curX + curPiece.moves[moveIndex].moverange / 2;
                 int neededY = curY + 1;
 
                 //now we regex and find buttons that fit that

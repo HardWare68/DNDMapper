@@ -9,9 +9,9 @@
     },
 
     {
-      "moveName": "Slash Again",
+      "moveName": "Bigger Slash",
       "moveType": "Slash",
-      "moveRange": 3
+      "moveRange": 5
     }
   ]
 }
