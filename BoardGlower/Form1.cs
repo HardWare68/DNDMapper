@@ -56,6 +56,21 @@ namespace BoardGlower
             }
         }
 
+        //just uncolour all the boxes :)
+        private void uncolourMap(object sender, EventArgs e)
+        {
+            string pattern = "btnR\\d+C\\d+";
+            Regex rg = new Regex(pattern);
+
+            foreach(Control controlz in this.Controls)
+            {
+                if (rg.IsMatch(controlz.Name))
+                {
+                    controlz.BackColor = Color.FromArgb(0, 0xF0, 0xF0, 0xF0);
+                }
+            }
+        }
+
         //function that handles the map buttons being clicked. get ready for some abominations lmao.
         private void mapButtonClick(object sender, EventArgs e)
         {
@@ -89,6 +104,7 @@ namespace BoardGlower
                     moveButton.Name = "btnMove" + i;
 
                     moveButton.MouseHover += new EventHandler(actionButtonHover);
+                    moveButton.MouseLeave += new EventHandler(uncolourMap);
 
                     grpMoves.Controls.Add(moveButton);
                     X += 75;

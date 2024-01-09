@@ -40,10 +40,10 @@
             this.txtLog = new System.Windows.Forms.TextBox();
             this.lblLog = new System.Windows.Forms.Label();
             this.grpCompass = new System.Windows.Forms.GroupBox();
-            this.radUp = new System.Windows.Forms.RadioButton();
-            this.radDown = new System.Windows.Forms.RadioButton();
-            this.radLeft = new System.Windows.Forms.RadioButton();
             this.radRight = new System.Windows.Forms.RadioButton();
+            this.radLeft = new System.Windows.Forms.RadioButton();
+            this.radDown = new System.Windows.Forms.RadioButton();
+            this.radUp = new System.Windows.Forms.RadioButton();
             this.grpCompass.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,12 +102,13 @@
             // 
             // btnDefault
             // 
+            this.btnDefault.BackColor = System.Drawing.SystemColors.Control;
             this.btnDefault.Location = new System.Drawing.Point(1130, 300);
             this.btnDefault.Name = "btnDefault";
             this.btnDefault.Size = new System.Drawing.Size(75, 23);
             this.btnDefault.TabIndex = 8;
             this.btnDefault.Text = "Default Size";
-            this.btnDefault.UseVisualStyleBackColor = true;
+            this.btnDefault.UseVisualStyleBackColor = false;
             this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
             // 
             // btnClear
@@ -161,25 +162,15 @@
             this.grpCompass.TabStop = false;
             this.grpCompass.Text = "Compass";
             // 
-            // radUp
+            // radRight
             // 
-            this.radUp.AutoSize = true;
-            this.radUp.Location = new System.Drawing.Point(30, 19);
-            this.radUp.Name = "radUp";
-            this.radUp.Size = new System.Drawing.Size(14, 13);
-            this.radUp.TabIndex = 0;
-            this.radUp.TabStop = true;
-            this.radUp.UseVisualStyleBackColor = true;
-            // 
-            // radDown
-            // 
-            this.radDown.AutoSize = true;
-            this.radDown.Location = new System.Drawing.Point(30, 56);
-            this.radDown.Name = "radDown";
-            this.radDown.Size = new System.Drawing.Size(14, 13);
-            this.radDown.TabIndex = 1;
-            this.radDown.TabStop = true;
-            this.radDown.UseVisualStyleBackColor = true;
+            this.radRight.AutoSize = true;
+            this.radRight.Location = new System.Drawing.Point(55, 37);
+            this.radRight.Name = "radRight";
+            this.radRight.Size = new System.Drawing.Size(14, 13);
+            this.radRight.TabIndex = 3;
+            this.radRight.TabStop = true;
+            this.radRight.UseVisualStyleBackColor = true;
             // 
             // radLeft
             // 
@@ -191,15 +182,25 @@
             this.radLeft.TabStop = true;
             this.radLeft.UseVisualStyleBackColor = true;
             // 
-            // radRight
+            // radDown
             // 
-            this.radRight.AutoSize = true;
-            this.radRight.Location = new System.Drawing.Point(55, 37);
-            this.radRight.Name = "radRight";
-            this.radRight.Size = new System.Drawing.Size(14, 13);
-            this.radRight.TabIndex = 3;
-            this.radRight.TabStop = true;
-            this.radRight.UseVisualStyleBackColor = true;
+            this.radDown.AutoSize = true;
+            this.radDown.Location = new System.Drawing.Point(30, 56);
+            this.radDown.Name = "radDown";
+            this.radDown.Size = new System.Drawing.Size(14, 13);
+            this.radDown.TabIndex = 1;
+            this.radDown.TabStop = true;
+            this.radDown.UseVisualStyleBackColor = true;
+            // 
+            // radUp
+            // 
+            this.radUp.AutoSize = true;
+            this.radUp.Location = new System.Drawing.Point(30, 19);
+            this.radUp.Name = "radUp";
+            this.radUp.Size = new System.Drawing.Size(14, 13);
+            this.radUp.TabIndex = 0;
+            this.radUp.TabStop = true;
+            this.radUp.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
