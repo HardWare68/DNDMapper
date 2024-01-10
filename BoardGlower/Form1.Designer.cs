@@ -220,7 +220,7 @@
             this.Controls.Add(this.lblPieces);
             this.Controls.Add(this.lstPieces);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "DND Mapper";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.grpCompass.ResumeLayout(false);
             this.grpCompass.PerformLayout();
