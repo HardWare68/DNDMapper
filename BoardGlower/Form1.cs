@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GridButton3;
 
 namespace BoardGlower
 {
@@ -332,11 +333,13 @@ namespace BoardGlower
                 for(int j = 0; j < cols; j++)
                 {
                     //create ze button
-                    Button button = new Button();
+                    CustomControl1 button = new CustomControl1();
 
                     button.Name = "btnR" + i + "C" + j;
                     button.Location = new Point(startingX, startingY);
                     button.Size = new Size(width, height);
+                    button.row = i;
+                    button.col = j;
 
                     button.Click += new EventHandler(this.mapButtonClick);
 
@@ -378,8 +381,8 @@ namespace BoardGlower
         //Resets the map to the default size
         private void btnDefault_Click(object sender, EventArgs e)
         {
-            txtSizeRows.Text = "10";
-            txtSizeCols.Text = "10";
+            txtSizeRows.Text = "15";
+            txtSizeCols.Text = "15";
             setUpMap();
         }
 

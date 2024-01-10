@@ -79,7 +79,7 @@
             this.txtSizeRows.Name = "txtSizeRows";
             this.txtSizeRows.Size = new System.Drawing.Size(21, 20);
             this.txtSizeRows.TabIndex = 5;
-            this.txtSizeRows.Text = "10";
+            this.txtSizeRows.Text = "15";
             this.txtSizeRows.TextChanged += new System.EventHandler(this.txtSizeRows_TextChanged);
             // 
             // label1
@@ -97,7 +97,7 @@
             this.txtSizeCols.Name = "txtSizeCols";
             this.txtSizeCols.Size = new System.Drawing.Size(21, 20);
             this.txtSizeCols.TabIndex = 7;
-            this.txtSizeCols.Text = "10";
+            this.txtSizeCols.Text = "15";
             this.txtSizeCols.TextChanged += new System.EventHandler(this.txtSizeCols_TextChanged);
             // 
             // btnDefault
