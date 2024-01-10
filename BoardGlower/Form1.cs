@@ -252,7 +252,7 @@ namespace BoardGlower
             int curY = retrieveCurrentY();
 
             //lets get out the "main axes." you know, the parts of the splash that go the furthest.
-            int lowMainX = curX - curPiece.moves[moveIndex].moverange / 2;
+            /*int lowMainX = curX - curPiece.moves[moveIndex].moverange / 2;
             int highMainX = curX + curPiece.moves[moveIndex].moverange / 2;
             int lowMainY = curY - curPiece.moves[moveIndex].moverange / 2;
             int highMainY = curY + curPiece.moves[moveIndex].moverange / 2;
@@ -262,15 +262,40 @@ namespace BoardGlower
             Regex XAxisRegex = new Regex(XAxisPattern);
 
             string YAxisPattern = "btnR" + curX + "C[" + lowMainY + "-" + highMainY + "]";
-            Regex YAxisRegex = new Regex(YAxisPattern);
+            Regex YAxisRegex = new Regex(YAxisPattern);*/
 
-            foreach (Control controlz in this.Controls)
+            //and now, a quadrant. but half. a halfrant. which i do a lot. i go on a lot of half rants.
+            //a halfrant is simply the main axis moved up, and then shrunk down by one.
+            for(int i = 0; i < curPiece.moves[moveIndex].moverange; i++)
+            {
+                int lowMainY = curY - curPiece.moves[moveIndex].moverange / 2;
+                int highMainY = curY + curPiece.moves[moveIndex].moverange / 2;
+
+                //what row are we currently on
+                int neededX = curX + i;
+
+                //what columns we need
+                int lowNeededY = lowMainY - i;
+                int highNeededY = highMainY + i;
+
+                string neededPattern = "btnR" + neededX + "C[" + lowNeededY + "-" + highNeededY + "]";
+                Regex neededRegex = new Regex(neededPattern);
+                foreach (Control controlz in this.Controls)
+                {
+                    if (neededRegex.IsMatch(controlz.Name))
+                    {
+                        controlz.BackColor = Color.Green;
+                    }
+                }
+            }
+
+            /*foreach (Control controlz in this.Controls)
             {
                 if (XAxisRegex.IsMatch(controlz.Name) || YAxisRegex.IsMatch(controlz.Name))
                 {
                     controlz.BackColor = Color.Green;
                 }
-            }
+            }*/
         }
 
         //Set up the map
