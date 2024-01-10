@@ -12,6 +12,12 @@
       "moveName": "Bigger Slash",
       "moveType": "Slash",
       "moveRange": 5
+    },
+
+    {
+      "moveName": "Splash",
+      "moveType": "Splash",
+      "moveRange": 5
     }
   ]
 }

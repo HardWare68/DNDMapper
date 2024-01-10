@@ -77,15 +77,14 @@ namespace BoardGlower
             btnCurrentPiece = (Button)sender;
             JsonSerializer serializer = new JsonSerializer();
 
-            //Load up the piece
-            using (StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
-            {
-                curPiece = (piece)serializer.Deserialize(file, typeof(piece));
-            }
-
             //If the current button is empty (and something is selected), let's fill it up
             if (btnCurrentPiece.Text == "" && lstPieces.SelectedIndex != -1)
             {
+                //Load up the piece
+                using (StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
+                {
+                    curPiece = (piece)serializer.Deserialize(file, typeof(piece));
+                }
                 btnCurrentPiece.Text = curPiece.symbol;
             } 
             //oh no. there is a piece in there. let's fill out the moves.
@@ -126,6 +125,10 @@ namespace BoardGlower
                     slashAttack(btnSender, moveIndex);
                     break;
 
+                case "SPLASH":
+                    splashAttack(btnSender, moveIndex);
+                    break;
+
                 default:
                     txtLog.Text += "[E] Invalid Move Type supplied!";
                     break;
@@ -148,6 +151,7 @@ namespace BoardGlower
             return int.Parse(rgCurY.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
         }
 
+        //method for handling the "slash" attack
         private void slashAttack(Button btnSender, int moveIndex)
         {
             //lets first get out the current X and Y
@@ -238,6 +242,35 @@ namespace BoardGlower
             else { txtLog.Text += "[W] Please select a direction on the compass."; }
 
 
+        }
+
+        //method for handling the "splash" attack
+        private void splashAttack(Button btnSender, int moveIndex)
+        {
+            //lets first get out the current X and Y
+            int curX = retrieveCurrentX();
+            int curY = retrieveCurrentY();
+
+            //lets get out the "main axes." you know, the parts of the splash that go the furthest.
+            int lowMainX = curX - curPiece.moves[moveIndex].moverange / 2;
+            int highMainX = curX + curPiece.moves[moveIndex].moverange / 2;
+            int lowMainY = curY - curPiece.moves[moveIndex].moverange / 2;
+            int highMainY = curY + curPiece.moves[moveIndex].moverange / 2;
+
+            //set up the main axes regexs
+            string XAxisPattern = "btnR[" + lowMainX + "-" + highMainX + "]C" + curY;
+            Regex XAxisRegex = new Regex(XAxisPattern);
+
+            string YAxisPattern = "btnR" + curX + "C[" + lowMainY + "-" + highMainY + "]";
+            Regex YAxisRegex = new Regex(YAxisPattern);
+
+            foreach (Control controlz in this.Controls)
+            {
+                if (XAxisRegex.IsMatch(controlz.Name) || YAxisRegex.IsMatch(controlz.Name))
+                {
+                    controlz.BackColor = Color.Green;
+                }
+            }
         }
 
         //Set up the map
