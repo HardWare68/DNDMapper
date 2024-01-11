@@ -102,12 +102,14 @@ namespace BoardGlower
                     moveButton.Text = curPiece.moves[i].moveName;
                     moveButton.Location = new Point(X, Y);
                     moveButton.Name = "btnMove" + i;
+                    moveButton.Size = new Size(93, 23);
 
                     moveButton.MouseHover += new EventHandler(actionButtonHover);
                     moveButton.MouseLeave += new EventHandler(uncolourMap);
 
                     grpMoves.Controls.Add(moveButton);
-                    X += 75;
+                    X += 93;
+                    if ((i + 1) % 3 == 0 && i > 0) { X = 7; Y += 23; }
                 }
             }
         }
