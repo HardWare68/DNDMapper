@@ -280,6 +280,32 @@ namespace BoardGlower
                     }
                 }
             }
+            
+            //the other halfrant.
+            for (int i = 0; i < curPiece.moves[moveIndex].moverange + 1; i++)
+            {
+                int lowMainY = curY - curPiece.moves[moveIndex].moverange;
+                int highMainY = curY + curPiece.moves[moveIndex].moverange;
+
+                //what row are we currently on
+                int neededX = curX - i;
+
+                //what columns we need
+                int lowNeededY = lowMainY + i;
+                int highNeededY = highMainY - i;
+
+                foreach (Control controlz in this.Controls)
+                {
+                    if (controlz.GetType() == typeof(CustomControl1))
+                    {
+                        CustomControl1 customControl1 = (CustomControl1)controlz;
+                        if (customControl1.row == neededX && isInRange(customControl1.col, lowNeededY, highNeededY))
+                        {
+                            controlz.BackColor = Color.Green;
+                        }
+                    }
+                }
+            }
         }
 
         //Set up the map
