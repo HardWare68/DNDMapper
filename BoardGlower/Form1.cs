@@ -254,51 +254,32 @@ namespace BoardGlower
             int curX = retrieveCurrentX();
             int curY = retrieveCurrentY();
 
-            //lets get out the "main axes." you know, the parts of the splash that go the furthest.
-            /*int lowMainX = curX - curPiece.moves[moveIndex].moverange / 2;
-            int highMainX = curX + curPiece.moves[moveIndex].moverange / 2;
-            int lowMainY = curY - curPiece.moves[moveIndex].moverange / 2;
-            int highMainY = curY + curPiece.moves[moveIndex].moverange / 2;
-
-            //set up the main axes regexs
-            string XAxisPattern = "btnR[" + lowMainX + "-" + highMainX + "]C" + curY;
-            Regex XAxisRegex = new Regex(XAxisPattern);
-
-            string YAxisPattern = "btnR" + curX + "C[" + lowMainY + "-" + highMainY + "]";
-            Regex YAxisRegex = new Regex(YAxisPattern);*/
-
             //and now, a quadrant. but half. a halfrant. which i do a lot. i go on a lot of half rants.
             //a halfrant is simply the main axis moved up, and then shrunk down by one.
-            for(int i = 0; i < curPiece.moves[moveIndex].moverange; i++)
+            for(int i = 0; i < curPiece.moves[moveIndex].moverange + 1; i++)
             {
-                int lowMainY = curY - curPiece.moves[moveIndex].moverange / 2;
-                int highMainY = curY + curPiece.moves[moveIndex].moverange / 2;
+                int lowMainY = curY - curPiece.moves[moveIndex].moverange;
+                int highMainY = curY + curPiece.moves[moveIndex].moverange;
 
                 //what row are we currently on
                 int neededX = curX + i;
 
                 //what columns we need
-                int lowNeededY = lowMainY - i;
-                int highNeededY = highMainY + i;
+                int lowNeededY = lowMainY + i;
+                int highNeededY = highMainY - i;
 
-                string neededPattern = "btnR" + neededX + "C[" + lowNeededY + "-" + highNeededY + "]";
-                Regex neededRegex = new Regex(neededPattern);
                 foreach (Control controlz in this.Controls)
                 {
-                    if (neededRegex.IsMatch(controlz.Name))
+                    if (controlz.GetType() == typeof(CustomControl1))
                     {
-                        controlz.BackColor = Color.Green;
+                        CustomControl1 customControl1 = (CustomControl1)controlz;
+                        if (customControl1.row == neededX && isInRange(customControl1.col, lowNeededY, highNeededY))
+                        {
+                            controlz.BackColor = Color.Green;
+                        }
                     }
                 }
             }
-
-            /*foreach (Control controlz in this.Controls)
-            {
-                if (XAxisRegex.IsMatch(controlz.Name) || YAxisRegex.IsMatch(controlz.Name))
-                {
-                    controlz.BackColor = Color.Green;
-                }
-            }*/
         }
 
         //Set up the map
