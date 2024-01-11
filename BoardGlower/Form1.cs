@@ -131,7 +131,7 @@ namespace BoardGlower
                     break;
 
                 case "CHECKER":
-                    checkerAttack(btnSender, moveIndex);
+                    checkerAttack(moveIndex);
                     break;
 
                 default:
@@ -313,9 +313,27 @@ namespace BoardGlower
         }
 
         //method for handling the "checker" attack
-        private void splashAttack(int moveIndex)
+        private void checkerAttack(int moveIndex)
         {
+            //I should honestly factor this out into a method sometime soon. Or something.
+            int curX = retrieveCurrentX();
+            int curY = retrieveCurrentY();
 
+            //So think of a checkerboard, right? There are the black squares and white squares.
+            //If you add together the X and Y of a square, it should come out either odd or even.
+            //And all black squares will be odd, and all will be even (or vice versa).
+            //So, the "parity" of the current square should match all the other squares we want.
+            foreach (Control controlz in this.Controls)
+            {
+                if (controlz.GetType() == typeof(CustomControl1))
+                {
+                    CustomControl1 customControl1 = (CustomControl1)controlz;
+                    if (((curX + curY) % 2) == ((customControl1.col + customControl1.row) % 2))
+                    {
+                        controlz.BackColor = Color.Green;
+                    }
+                }
+            }
         }
 
         //Set up the map
