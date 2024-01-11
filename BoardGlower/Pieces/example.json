@@ -18,6 +18,12 @@
       "moveName": "Splash",
       "moveType": "Splash",
       "moveRange": 5
+    },
+
+    {
+      "moveName": "Checkerboard",
+      "moveType": "Checker",
+      "moveRange": 5
     }
   ]
 }

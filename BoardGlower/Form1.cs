@@ -123,11 +123,15 @@ namespace BoardGlower
             switch (curPiece.moves[moveIndex].moveType.ToUpper())
             {
                 case "SLASH":
-                    slashAttack(btnSender, moveIndex);
+                    slashAttack(moveIndex);
                     break;
 
                 case "SPLASH":
-                    splashAttack(btnSender, moveIndex);
+                    splashAttack(moveIndex);
+                    break;
+
+                case "CHECKER":
+                    checkerAttack(btnSender, moveIndex);
                     break;
 
                 default:
@@ -155,7 +159,7 @@ namespace BoardGlower
         }
 
         //method for handling the "slash" attack
-        private void slashAttack(Button btnSender, int moveIndex)
+        private void slashAttack(int moveIndex)
         {
             //lets first get out the current X and Y
             int curX = retrieveCurrentX();
@@ -248,7 +252,7 @@ namespace BoardGlower
         }
 
         //method for handling the "splash" attack
-        private void splashAttack(Button btnSender, int moveIndex)
+        private void splashAttack(int moveIndex)
         {
             //lets first get out the current X and Y
             int curX = retrieveCurrentX();
@@ -306,6 +310,12 @@ namespace BoardGlower
                     }
                 }
             }
+        }
+
+        //method for handling the "checker" attack
+        private void splashAttack(int moveIndex)
+        {
+
         }
 
         //Set up the map
