@@ -136,6 +136,7 @@ namespace BoardGlower
             }
         }
 
+        //method to determine whether a value is in range or not
         private Boolean isInRange(int value, int low, int high)
         {
             return (value >= low && value <= high);
