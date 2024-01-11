@@ -18,7 +18,7 @@ namespace BoardGlower
     {
         private DirectoryInfo pieceDir = new DirectoryInfo("..\\..\\Pieces"); //Directory object for reading the piece files. Relative should work.
         piece curPiece; //Gotta put this on the global scope. lol!
-        Button btnCurrentPiece; //Gotta put this on the global scope as well. lol!
+        CustomControl1 btnCurrentPiece; //Gotta put this on the global scope as well. lol!
 
         //object that stores the piece info from the JSON
         public class piece
@@ -75,7 +75,7 @@ namespace BoardGlower
         //function that handles the map buttons being clicked. get ready for some abominations lmao.
         private void mapButtonClick(object sender, EventArgs e)
         {
-            btnCurrentPiece = (Button)sender;
+            btnCurrentPiece = (CustomControl1)sender;
             JsonSerializer serializer = new JsonSerializer();
 
             //If the current button is empty (and something is selected), let's fill it up
@@ -136,20 +136,21 @@ namespace BoardGlower
             }
         }
 
+        private Boolean isInRange(int value, int low, int high)
+        {
+            return (value >= low && value <= high);
+        }
+
         //method for retrieving the current X position of the current piece
         private int retrieveCurrentX()
         {
-            string curXPattern = "R\\d+";
-            Regex rgCurX = new Regex(curXPattern);
-            return int.Parse(rgCurX.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
+            return btnCurrentPiece.row;
         }
 
         //retrieve current Y position as well. yeehaw!
         private int retrieveCurrentY()
         {
-            string curYPattern = "C\\d+";
-            Regex rgCurY = new Regex(curYPattern);
-            return int.Parse(rgCurY.Match(btnCurrentPiece.Name).ToString().Remove(0, 1));
+            return btnCurrentPiece.col;
         }
 
         //method for handling the "slash" attack
@@ -169,15 +170,15 @@ namespace BoardGlower
                 int lowY = curY - curPiece.moves[moveIndex].moverange / 2;
                 int highY = curY + curPiece.moves[moveIndex].moverange / 2;
 
-                //now we regex and find buttons that fit that
-                //this is totally normal behaviour
-                string neededPattern = "btnR" + neededX + "C[" + lowY + "-" + highY + "]";
-                Regex rgNeeded = new Regex(neededPattern);
                 foreach (Control controlz in this.Controls)
                 {
-                    if (rgNeeded.IsMatch(controlz.Name))
+                    if (controlz.GetType() == typeof(CustomControl1))
                     {
-                        controlz.BackColor = Color.Green;
+                        CustomControl1 customControl1 = (CustomControl1)controlz;
+                        if (customControl1.row == neededX && isInRange(customControl1.col, lowY, highY))
+                        {
+                            controlz.BackColor = Color.Green;
+                        }
                     }
                 }
             }
@@ -189,15 +190,15 @@ namespace BoardGlower
                 int lowY = curY - curPiece.moves[moveIndex].moverange / 2;
                 int highY = curY + curPiece.moves[moveIndex].moverange / 2;
 
-                //now we regex and find buttons that fit that
-                //this is totally normal behaviour
-                string neededPattern = "btnR" + neededX + "C[" + lowY + "-" + highY + "]";
-                Regex rgNeeded = new Regex(neededPattern);
                 foreach (Control controlz in this.Controls)
                 {
-                    if (rgNeeded.IsMatch(controlz.Name))
+                    if (controlz.GetType() == typeof(CustomControl1))
                     {
-                        controlz.BackColor = Color.Green;
+                        CustomControl1 customControl1 = (CustomControl1)controlz;
+                        if (customControl1.row == neededX && isInRange(customControl1.col, lowY, highY))
+                        {
+                            controlz.BackColor = Color.Green;
+                        }
                     }
                 }
             }
@@ -208,15 +209,15 @@ namespace BoardGlower
                 int highX = curX + curPiece.moves[moveIndex].moverange / 2;
                 int neededY = curY - 1;
 
-                //now we regex and find buttons that fit that
-                //this is totally normal behaviour
-                string neededPattern = "btnR[" + lowX + "-" + highX + "]C" + neededY;
-                Regex rgNeeded = new Regex(neededPattern);
                 foreach (Control controlz in this.Controls)
                 {
-                    if (rgNeeded.IsMatch(controlz.Name))
+                    if (controlz.GetType() == typeof(CustomControl1))
                     {
-                        controlz.BackColor = Color.Green;
+                        CustomControl1 customControl1 = (CustomControl1)controlz;
+                        if (customControl1.col == neededY && isInRange(customControl1.row, lowX, highX))
+                        {
+                            controlz.BackColor = Color.Green;
+                        }
                     }
                 }
             }
@@ -227,15 +228,15 @@ namespace BoardGlower
                 int highX = curX + curPiece.moves[moveIndex].moverange / 2;
                 int neededY = curY + 1;
 
-                //now we regex and find buttons that fit that
-                //this is totally normal behaviour
-                string neededPattern = "btnR[" + lowX + "-" + highX + "]C" + neededY;
-                Regex rgNeeded = new Regex(neededPattern);
                 foreach (Control controlz in this.Controls)
                 {
-                    if (rgNeeded.IsMatch(controlz.Name))
+                    if (controlz.GetType() == typeof(CustomControl1))
                     {
-                        controlz.BackColor = Color.Green;
+                        CustomControl1 customControl1 = (CustomControl1)controlz;
+                        if (customControl1.col == neededY && isInRange(customControl1.row, lowX, highX))
+                        {
+                            controlz.BackColor = Color.Green;
+                        }
                     }
                 }
             }
