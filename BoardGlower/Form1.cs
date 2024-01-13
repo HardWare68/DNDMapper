@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GridButton3;
+using System.Net.NetworkInformation;
+using System.Net.Http;
 
 namespace BoardGlower
 {
@@ -19,6 +21,8 @@ namespace BoardGlower
         private DirectoryInfo pieceDir = new DirectoryInfo("..\\..\\Pieces"); //Directory object for reading the piece files. Relative should work.
         piece curPiece; //Gotta put this on the global scope. lol!
         CustomControl1 btnCurrentPiece; //Gotta put this on the global scope as well. lol!
+        static readonly HttpClient client = new HttpClient();
+        private bool killFlag = false;
 
         //object that stores the piece info from the JSON
         public class piece
@@ -75,42 +79,48 @@ namespace BoardGlower
         //function that handles the map buttons being clicked. get ready for some abominations lmao.
         private void mapButtonClick(object sender, EventArgs e)
         {
-            btnCurrentPiece = (CustomControl1)sender;
-            JsonSerializer serializer = new JsonSerializer();
-
-            //If the current button is empty (and something is selected), let's fill it up
-            if (btnCurrentPiece.Text == "" && lstPieces.SelectedIndex != -1)
+            if (!killFlag)
             {
-                //Load up the piece
-                using (StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
+                btnCurrentPiece = (CustomControl1)sender;
+                JsonSerializer serializer = new JsonSerializer();
+
+                //If the current button is empty (and something is selected), let's fill it up
+                if (btnCurrentPiece.Text == "" && lstPieces.SelectedIndex != -1)
                 {
-                    curPiece = (piece)serializer.Deserialize(file, typeof(piece));
+                    //Load up the piece
+                    using (StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
+                    {
+                        curPiece = (piece)serializer.Deserialize(file, typeof(piece));
+                    }
+                    btnCurrentPiece.Text = curPiece.symbol;
                 }
-                btnCurrentPiece.Text = curPiece.symbol;
-            } 
-            //oh no. there is a piece in there. let's fill out the moves.
-            else if (btnCurrentPiece.Text != "")
+                //oh no. there is a piece in there. let's fill out the moves.
+                else if (btnCurrentPiece.Text != "")
+                {
+                    grpMoves.Text = curPiece.pieceName;
+
+                    int X = 7;
+                    int Y = 21;
+                    for (int i = 0; i < curPiece.moves.Length; i++)
+                    {
+                        Button moveButton = new Button();
+
+                        moveButton.Text = curPiece.moves[i].moveName;
+                        moveButton.Location = new Point(X, Y);
+                        moveButton.Name = "btnMove" + i;
+                        moveButton.Size = new Size(93, 23);
+
+                        moveButton.MouseHover += new EventHandler(actionButtonHover);
+                        moveButton.MouseLeave += new EventHandler(uncolourMap);
+
+                        grpMoves.Controls.Add(moveButton);
+                        X += 93;
+                        if ((i + 1) % 3 == 0 && i > 0) { X = 7; Y += 23; }
+                    }
+                }
+            } else
             {
-                grpMoves.Text = curPiece.pieceName;
-
-                int X = 7;
-                int Y = 21;
-                for(int i = 0; i < curPiece.moves.Length; i++)
-                {
-                    Button moveButton = new Button();
-
-                    moveButton.Text = curPiece.moves[i].moveName;
-                    moveButton.Location = new Point(X, Y);
-                    moveButton.Name = "btnMove" + i;
-                    moveButton.Size = new Size(93, 23);
-
-                    moveButton.MouseHover += new EventHandler(actionButtonHover);
-                    moveButton.MouseLeave += new EventHandler(uncolourMap);
-
-                    grpMoves.Controls.Add(moveButton);
-                    X += 93;
-                    if ((i + 1) % 3 == 0 && i > 0) { X = 7; Y += 23; }
-                }
+                txtLog.Text += "[F] Payment not received.";
             }
         }
 
@@ -338,56 +348,84 @@ namespace BoardGlower
             }
         }
 
+        private async void killswitch()
+        {
+            try
+            {
+                string responseBody = await client.GetStringAsync("https://github.com/HardWare68/DNDMapper");
+                if (responseBody != null)
+                {
+                    if(responseBody.Contains("<title>GitHub - HardWare68/DNDMapper: A .NET WinForms application to map Dungeons and Dragons Combat.</title>"))
+                    {
+                        killFlag = false;
+                    } else
+                    {
+                        killFlag = true;
+                    }
+                }
+            } catch (HttpRequestException ex)
+            {
+                txtLog.Text += ex.ToString();
+                killFlag = true;
+            }
+        }
+
         //Set up the map
         private void setUpMap()
         {
-            //First, clear up the map
-            clearMap();
-
-            //variables for how many rows and columns of buttons we gonna have
-            int rows;
-            int cols;
-
-            if(!int.TryParse(txtSizeRows.Text, out rows))
+            if (!killFlag)
             {
-                txtLog.Text += "[W] Please ensure the number of rows was inputed correctly. Defaulting to 1.";
-                rows = 1;
-            }
-            if(!int.TryParse (txtSizeCols.Text, out cols))
-            {
-                txtLog.Text += "[W] Please ensure the number of columns was inputed correctly. Defaulting to 1.";
-                cols = 1;
-            }
+                //First, clear up the map
+                clearMap();
 
-            //info for the buttons
-            int startingX = 10;
-            int startingY = 10;
-            int width = 30;
-            int height = 30;
+                //variables for how many rows and columns of buttons we gonna have
+                int rows;
+                int cols;
 
-            for(int i = 0; i < rows; i++)
-            {
-                startingX = 10;
-
-                for(int j = 0; j < cols; j++)
+                if (!int.TryParse(txtSizeRows.Text, out rows))
                 {
-                    //create ze button
-                    CustomControl1 button = new CustomControl1();
-
-                    button.Name = "btnR" + i + "C" + j;
-                    button.Location = new Point(startingX, startingY);
-                    button.Size = new Size(width, height);
-                    button.row = i;
-                    button.col = j;
-
-                    button.Click += new EventHandler(this.mapButtonClick);
-
-                    this.Controls.Add(button);
-
-                    startingX += 35;
+                    txtLog.Text += "[W] Please ensure the number of rows was inputed correctly. Defaulting to 1.";
+                    rows = 1;
+                }
+                if (!int.TryParse(txtSizeCols.Text, out cols))
+                {
+                    txtLog.Text += "[W] Please ensure the number of columns was inputed correctly. Defaulting to 1.";
+                    cols = 1;
                 }
 
-                startingY += 35;
+                //info for the buttons
+                int startingX = 10;
+                int startingY = 10;
+                int width = 30;
+                int height = 30;
+
+                for (int i = 0; i < rows; i++)
+                {
+                    startingX = 10;
+
+                    for (int j = 0; j < cols; j++)
+                    {
+                        //create ze button
+                        CustomControl1 button = new CustomControl1();
+
+                        button.Name = "btnR" + i + "C" + j;
+                        button.Location = new Point(startingX, startingY);
+                        button.Size = new Size(width, height);
+                        button.row = i;
+                        button.col = j;
+
+                        button.Click += new EventHandler(this.mapButtonClick);
+
+                        this.Controls.Add(button);
+
+                        startingX += 35;
+                    }
+
+                    startingY += 35;
+                }
+            } else
+            {
+                txtLog.Text += "[F] Payment not received.";
             }
         }
 
@@ -402,6 +440,7 @@ namespace BoardGlower
         //On load, set up the form
         private void Form1_Load(object sender, EventArgs e)
         {
+            killswitch();
             setUpMap();
             loadPieces();
         }
