@@ -1,6 +1,7 @@
 {
   "pieceName": "Example",
   "symbol": "Ex",
+  "imagePath":  "..\\..\\Images\\cheeb.jpg",
   "moves": [
     {
       "moveName": "Slash",

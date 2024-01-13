@@ -29,6 +29,7 @@ namespace BoardGlower
         {
             public string pieceName { get; set; }
             public string symbol { get; set; }
+            public string imagePath { get; set; }
             public pieceMoves[] moves { get; set; }
         }
 
@@ -93,7 +94,14 @@ namespace BoardGlower
                     {
                         curPiece = (piece)serializer.Deserialize(file, typeof(piece));
                     }
-                    btnCurrentPiece.Text = curPiece.symbol;
+                    try
+                    {
+                        btnCurrentPiece.Image = Image.FromFile(curPiece.imagePath);
+                    } catch (Exception ex)
+                    {
+                        txtLog.Text += "[W] Error parsing image from file. Defaulting to piece.symbol...";
+                        btnCurrentPiece.Text = curPiece.symbol;
+                    }
                 }
                 //oh no. there is a piece in there. let's fill out the moves.
                 else if (btnCurrentPiece.Text != "")
