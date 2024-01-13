@@ -37,6 +37,7 @@ namespace BoardGlower
             public string moveName { get; set; }
             public string moveType { get; set; }
             public int moverange { get; set; }
+            public string moveColour { get; set; }
         }
 
 
@@ -194,7 +195,15 @@ namespace BoardGlower
                         CustomControl1 customControl1 = (CustomControl1)controlz;
                         if (customControl1.row == neededX && isInRange(customControl1.col, lowY, highY))
                         {
-                            controlz.BackColor = Color.Green;
+                            try
+                            {
+                                controlz.BackColor = Color.FromName(curPiece.moves[moveIndex].moveColour);
+                            }
+                            catch (Exception ex)
+                            {
+                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
+                                controlz.BackColor = Color.Red;
+                            }
                         }
                     }
                 }
@@ -291,7 +300,15 @@ namespace BoardGlower
                         CustomControl1 customControl1 = (CustomControl1)controlz;
                         if (customControl1.row == neededX && isInRange(customControl1.col, lowNeededY, highNeededY))
                         {
-                            controlz.BackColor = Color.Green;
+                            try
+                            {
+                                controlz.BackColor = Color.FromName(curPiece.moves[moveIndex].moveColour);
+                            }
+                            catch (Exception ex)
+                            {
+                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
+                                controlz.BackColor = Color.Red;
+                            }
                         }
                     }
                 }
@@ -317,7 +334,15 @@ namespace BoardGlower
                         CustomControl1 customControl1 = (CustomControl1)controlz;
                         if (customControl1.row == neededX && isInRange(customControl1.col, lowNeededY, highNeededY))
                         {
-                            controlz.BackColor = Color.Green;
+                            try
+                            {
+                                controlz.BackColor = Color.FromName(curPiece.moves[moveIndex].moveColour);
+                            }
+                            catch (Exception ex)
+                            {
+                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
+                                controlz.BackColor = Color.Red;
+                            }
                         }
                     }
                 }
@@ -342,7 +367,13 @@ namespace BoardGlower
                     CustomControl1 customControl1 = (CustomControl1)controlz;
                     if (((curX + curY) % 2) == ((customControl1.col + customControl1.row) % 2))
                     {
-                        controlz.BackColor = Color.Green;
+                        try
+                        {
+                            controlz.BackColor = Color.FromName(curPiece.moves[moveIndex].moveColour);
+                        } catch (Exception ex) {
+                            txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
+                            controlz.BackColor = Color.Red;
+                        }
                     }
                 }
             }

@@ -5,25 +5,29 @@
     {
       "moveName": "Slash",
       "moveType": "Slash",
-      "moveRange": 3
+      "moveRange": 3,
+      "moveColour":  "Salmon"
     },
 
     {
       "moveName": "Bigger Slash",
       "moveType": "Slash",
-      "moveRange": 5
+      "moveRange": 5,
+      "moveColour": "SlateBlue"
     },
 
     {
       "moveName": "Splash",
       "moveType": "Splash",
-      "moveRange": 5
+      "moveRange": 5,
+      "moveColour": "Yellow"
     },
 
     {
       "moveName": "Checkerboard",
       "moveType": "Checker",
-      "moveRange": 5
+      "moveRange": 5,
+      "moveColour": "Red"
     }
   ]
 }
