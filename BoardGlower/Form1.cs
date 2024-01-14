@@ -87,7 +87,7 @@ namespace BoardGlower
                 JsonSerializer serializer = new JsonSerializer();
 
                 //If the current button is empty (and something is selected), let's fill it up
-                if (btnCurrentPiece.Text == "" && lstPieces.SelectedIndex != -1)
+                if ((btnCurrentPiece.Text == "" && btnCurrentPiece.Image == null) && lstPieces.SelectedIndex != -1)
                 {
                     //Load up the piece
                     using (StreamReader file = File.OpenText(pieceDir + "\\" + lstPieces.SelectedItem.ToString()))
@@ -104,7 +104,7 @@ namespace BoardGlower
                     }
                 }
                 //oh no. there is a piece in there. let's fill out the moves.
-                else if (btnCurrentPiece.Text != "")
+                else if ((btnCurrentPiece.Text != "" || btnCurrentPiece.Image != null))
                 {
                     grpMoves.Text = curPiece.pieceName;
 
@@ -435,8 +435,20 @@ namespace BoardGlower
                 //info for the buttons
                 int startingX = 10;
                 int startingY = 10;
-                int width = 30;
-                int height = 30;
+                int width;
+                int height;
+
+                if (!int.TryParse(txtMapWidth.Text, out width))
+                {
+                    txtLog.Text += "[W] Please ensure the width was inputed correctly. Defaulting to 30.";
+                    width = 30;
+                }
+
+                if (!int.TryParse(txtMapHeight.Text, out height))
+                {
+                    txtLog.Text += "[W] Please ensure the height was inputed correctly. Defaulting to 30.";
+                    height = 30;
+                }
 
                 for (int i = 0; i < rows; i++)
                 {
@@ -457,10 +469,10 @@ namespace BoardGlower
 
                         this.Controls.Add(button);
 
-                        startingX += 35;
+                        startingX += (width + 5);
                     }
 
-                    startingY += 35;
+                    startingY += (height + 5);
                 }
             } else
             {
@@ -500,13 +512,15 @@ namespace BoardGlower
         {
             txtSizeRows.Text = "15";
             txtSizeCols.Text = "15";
+            txtMapHeight.Text = "30";
+            txtMapWidth.Text = "30";
             setUpMap();
         }
 
-        //Completely clears the map. Useful for debugging.
+        //reloads the map.
         private void btnClear_Click(object sender, EventArgs e)
         {
-            clearMap();
+            setUpMap();
         }
     }
 }
