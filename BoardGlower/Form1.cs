@@ -53,12 +53,12 @@ namespace BoardGlower
             string pattern = "btnR\\d+C\\d+";
             Regex rg = new Regex(pattern);
 
-            for(int i = this.Controls.Count - 1; i >= 0; i--)
+            for(int i = pnlMap.Controls.Count - 1; i >= 0; i--)
             {
-                Control c = this.Controls[i];
+                Control c = pnlMap.Controls[i];
                 if (rg.IsMatch(c.Name))
                 {
-                    this.Controls.RemoveAt(i);
+                    pnlMap.Controls.RemoveAt(i);
                 }
             }
         }
@@ -69,7 +69,7 @@ namespace BoardGlower
             string pattern = "btnR\\d+C\\d+";
             Regex rg = new Regex(pattern);
 
-            foreach(Control controlz in this.Controls)
+            foreach(Control controlz in pnlMap.Controls)
             {
                 if (rg.IsMatch(controlz.Name))
                 {
@@ -196,7 +196,7 @@ namespace BoardGlower
                 int lowY = curY - curPiece.moves[moveIndex].moverange / 2;
                 int highY = curY + curPiece.moves[moveIndex].moverange / 2;
 
-                foreach (Control controlz in this.Controls)
+                foreach (Control controlz in pnlMap.Controls)
                 {
                     if (controlz.GetType() == typeof(CustomControl1))
                     {
@@ -224,14 +224,22 @@ namespace BoardGlower
                 int lowY = curY - curPiece.moves[moveIndex].moverange / 2;
                 int highY = curY + curPiece.moves[moveIndex].moverange / 2;
 
-                foreach (Control controlz in this.Controls)
+                foreach (Control controlz in pnlMap.Controls)
                 {
                     if (controlz.GetType() == typeof(CustomControl1))
                     {
                         CustomControl1 customControl1 = (CustomControl1)controlz;
                         if (customControl1.row == neededX && isInRange(customControl1.col, lowY, highY))
                         {
-                            controlz.BackColor = Color.Green;
+                            try
+                            {
+                                controlz.BackColor = Color.FromName(curPiece.moves[moveIndex].moveColour);
+                            }
+                            catch (Exception ex)
+                            {
+                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
+                                controlz.BackColor = Color.Red;
+                            }
                         }
                     }
                 }
@@ -243,14 +251,22 @@ namespace BoardGlower
                 int highX = curX + curPiece.moves[moveIndex].moverange / 2;
                 int neededY = curY - 1;
 
-                foreach (Control controlz in this.Controls)
+                foreach (Control controlz in pnlMap.Controls)
                 {
                     if (controlz.GetType() == typeof(CustomControl1))
                     {
                         CustomControl1 customControl1 = (CustomControl1)controlz;
                         if (customControl1.col == neededY && isInRange(customControl1.row, lowX, highX))
                         {
-                            controlz.BackColor = Color.Green;
+                            try
+                            {
+                                controlz.BackColor = Color.FromName(curPiece.moves[moveIndex].moveColour);
+                            }
+                            catch (Exception ex)
+                            {
+                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
+                                controlz.BackColor = Color.Red;
+                            }
                         }
                     }
                 }
@@ -262,14 +278,22 @@ namespace BoardGlower
                 int highX = curX + curPiece.moves[moveIndex].moverange / 2;
                 int neededY = curY + 1;
 
-                foreach (Control controlz in this.Controls)
+                foreach (Control controlz in pnlMap.Controls)
                 {
                     if (controlz.GetType() == typeof(CustomControl1))
                     {
                         CustomControl1 customControl1 = (CustomControl1)controlz;
                         if (customControl1.col == neededY && isInRange(customControl1.row, lowX, highX))
                         {
-                            controlz.BackColor = Color.Green;
+                            try
+                            {
+                                controlz.BackColor = Color.FromName(curPiece.moves[moveIndex].moveColour);
+                            }
+                            catch (Exception ex)
+                            {
+                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
+                                controlz.BackColor = Color.Red;
+                            }
                         }
                     }
                 }
@@ -301,7 +325,7 @@ namespace BoardGlower
                 int lowNeededY = lowMainY + i;
                 int highNeededY = highMainY - i;
 
-                foreach (Control controlz in this.Controls)
+                foreach (Control controlz in pnlMap.Controls)
                 {
                     if (controlz.GetType() == typeof(CustomControl1))
                     {
@@ -335,7 +359,7 @@ namespace BoardGlower
                 int lowNeededY = lowMainY + i;
                 int highNeededY = highMainY - i;
 
-                foreach (Control controlz in this.Controls)
+                foreach (Control controlz in pnlMap.Controls)
                 {
                     if (controlz.GetType() == typeof(CustomControl1))
                     {
@@ -368,7 +392,7 @@ namespace BoardGlower
             //If you add together the X and Y of a square, it should come out either odd or even.
             //And all black squares will be odd, and all will be even (or vice versa).
             //So, the "parity" of the current square should match all the other squares we want.
-            foreach (Control controlz in this.Controls)
+            foreach (Control controlz in pnlMap.Controls)
             {
                 if (controlz.GetType() == typeof(CustomControl1))
                 {
@@ -467,7 +491,7 @@ namespace BoardGlower
 
                         button.Click += new EventHandler(this.mapButtonClick);
 
-                        this.Controls.Add(button);
+                        pnlMap.Controls.Add(button);
 
                         startingX += (width + 5);
                     }
@@ -521,6 +545,12 @@ namespace BoardGlower
         private void btnClear_Click(object sender, EventArgs e)
         {
             setUpMap();
+        }
+
+        private void btnClearSquare_Click(object sender, EventArgs e)
+        {
+            btnCurrentPiece.Image = null;
+            btnCurrentPiece.Text = "";
         }
     }
 }

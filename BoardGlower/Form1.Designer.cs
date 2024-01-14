@@ -49,6 +49,8 @@
             this.txtMapWidth = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtMapHeight = new System.Windows.Forms.TextBox();
+            this.pnlMap = new System.Windows.Forms.Panel();
+            this.btnClearSquare = new System.Windows.Forms.Button();
             this.grpCompass.SuspendLayout();
             this.grpMapControls.SuspendLayout();
             this.SuspendLayout();
@@ -117,7 +119,7 @@
             // 
             // btnReload
             // 
-            this.btnReload.Location = new System.Drawing.Point(118, 90);
+            this.btnReload.Location = new System.Drawing.Point(124, 90);
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(75, 23);
             this.btnReload.TabIndex = 9;
@@ -258,11 +260,31 @@
             this.txtMapHeight.TabIndex = 13;
             this.txtMapHeight.Text = "30";
             // 
+            // pnlMap
+            // 
+            this.pnlMap.AutoScroll = true;
+            this.pnlMap.Location = new System.Drawing.Point(13, 13);
+            this.pnlMap.Name = "pnlMap";
+            this.pnlMap.Size = new System.Drawing.Size(953, 592);
+            this.pnlMap.TabIndex = 15;
+            // 
+            // btnClearSquare
+            // 
+            this.btnClearSquare.Location = new System.Drawing.Point(1386, 352);
+            this.btnClearSquare.Name = "btnClearSquare";
+            this.btnClearSquare.Size = new System.Drawing.Size(123, 23);
+            this.btnClearSquare.TabIndex = 16;
+            this.btnClearSquare.Text = "Clear Square";
+            this.btnClearSquare.UseVisualStyleBackColor = true;
+            this.btnClearSquare.Click += new System.EventHandler(this.btnClearSquare_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1536, 620);
+            this.Controls.Add(this.btnClearSquare);
+            this.Controls.Add(this.pnlMap);
             this.Controls.Add(this.grpMapControls);
             this.Controls.Add(this.grpCompass);
             this.Controls.Add(this.lblLog);
@@ -304,6 +326,8 @@
         private System.Windows.Forms.TextBox txtMapWidth;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtMapHeight;
+        private System.Windows.Forms.Panel pnlMap;
+        private System.Windows.Forms.Button btnClearSquare;
     }
 }
 
