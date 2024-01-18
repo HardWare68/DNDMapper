@@ -98,6 +98,7 @@ namespace BoardGlower
                     }
                     try
                     {
+                        //Try to grab the image. If not, just use the symbol.
                         btnCurrentPiece.Image = Image.FromFile(curPiece.imagePath);
                     } catch (Exception ex)
                     {
