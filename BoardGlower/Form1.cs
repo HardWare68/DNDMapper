@@ -14,6 +14,8 @@ using GridButton3;
 using System.Net.NetworkInformation;
 using System.Net.Http;
 
+//TO-DO: Change log handling to a separate file...
+
 namespace BoardGlower
 {
     public partial class Form1 : Form
@@ -99,7 +101,6 @@ namespace BoardGlower
                         btnCurrentPiece.Image = Image.FromFile(curPiece.imagePath);
                     } catch (Exception ex)
                     {
-                        txtLog.Text += "[W] Error parsing image from file. Defaulting to piece.symbol...";
                         btnCurrentPiece.Text = curPiece.symbol;
                     }
                 }
@@ -127,9 +128,6 @@ namespace BoardGlower
                         if ((i + 1) % 3 == 0 && i > 0) { X = 7; Y += 23; }
                     }
                 }
-            } else
-            {
-                txtLog.Text += "[F] Payment not received.";
             }
         }
 
@@ -156,7 +154,7 @@ namespace BoardGlower
                     break;
 
                 default:
-                    txtLog.Text += "[E] Invalid Move Type supplied!";
+                    /* Yippie! */
                     break;
             }
         }
@@ -209,7 +207,6 @@ namespace BoardGlower
                             }
                             catch (Exception ex)
                             {
-                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
                                 controlz.BackColor = Color.Red;
                             }
                         }
@@ -237,7 +234,6 @@ namespace BoardGlower
                             }
                             catch (Exception ex)
                             {
-                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
                                 controlz.BackColor = Color.Red;
                             }
                         }
@@ -264,7 +260,6 @@ namespace BoardGlower
                             }
                             catch (Exception ex)
                             {
-                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
                                 controlz.BackColor = Color.Red;
                             }
                         }
@@ -291,7 +286,6 @@ namespace BoardGlower
                             }
                             catch (Exception ex)
                             {
-                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
                                 controlz.BackColor = Color.Red;
                             }
                         }
@@ -299,7 +293,7 @@ namespace BoardGlower
                 }
             }
             //FUCK
-            else { txtLog.Text += "[W] Please select a direction on the compass."; }
+            else { /*Yippie!*/}
 
 
         }
@@ -338,7 +332,6 @@ namespace BoardGlower
                             }
                             catch (Exception ex)
                             {
-                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
                                 controlz.BackColor = Color.Red;
                             }
                         }
@@ -372,7 +365,6 @@ namespace BoardGlower
                             }
                             catch (Exception ex)
                             {
-                                txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
                                 controlz.BackColor = Color.Red;
                             }
                         }
@@ -403,7 +395,6 @@ namespace BoardGlower
                         {
                             controlz.BackColor = Color.FromName(curPiece.moves[moveIndex].moveColour);
                         } catch (Exception ex) {
-                            txtLog.Text += "[W] moveColour is invalid. Defaulting to red...";
                             controlz.BackColor = Color.Red;
                         }
                     }
@@ -428,7 +419,6 @@ namespace BoardGlower
                 }
             } catch (HttpRequestException ex)
             {
-                txtLog.Text += ex.ToString();
                 killFlag = true;
             }
         }
@@ -447,12 +437,10 @@ namespace BoardGlower
 
                 if (!int.TryParse(txtSizeRows.Text, out rows))
                 {
-                    txtLog.Text += "[W] Please ensure the number of rows was inputed correctly. Defaulting to 1.";
                     rows = 1;
                 }
                 if (!int.TryParse(txtSizeCols.Text, out cols))
                 {
-                    txtLog.Text += "[W] Please ensure the number of columns was inputed correctly. Defaulting to 1.";
                     cols = 1;
                 }
 
@@ -464,13 +452,11 @@ namespace BoardGlower
 
                 if (!int.TryParse(txtMapWidth.Text, out width))
                 {
-                    txtLog.Text += "[W] Please ensure the width was inputed correctly. Defaulting to 30.";
                     width = 30;
                 }
 
                 if (!int.TryParse(txtMapHeight.Text, out height))
                 {
-                    txtLog.Text += "[W] Please ensure the height was inputed correctly. Defaulting to 30.";
                     height = 30;
                 }
 
@@ -498,9 +484,6 @@ namespace BoardGlower
 
                     startingY += (height + 5);
                 }
-            } else
-            {
-                txtLog.Text += "[F] Payment not received.";
             }
         }
 
@@ -515,6 +498,7 @@ namespace BoardGlower
         //On load, set up the form
         private void Form1_Load(object sender, EventArgs e)
         {
+            pnlMap.BackgroundImage = Image.FromFile("..\\..\\Images\\mapBG.jpg");
             killswitch();
             setUpMap();
             loadPieces();
